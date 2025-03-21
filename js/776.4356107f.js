@@ -1,0 +1,1 @@
+"use strict";(globalThis["webpackChunkbattleship"]=globalThis["webpackChunkbattleship"]||[]).push([[776],{9776:(t,e,r)=>{r.r(e),r.d(e,{default:()=>s});var u=r(9835);function a(t,e){const r=(0,u.up)("router-view");return(0,u.wg)(),(0,u.iD)("div",null,[(0,u.Wm)(r)])}var i=r(1639);const l={},n=(0,i.Z)(l,[["render",a]]),s=n}}]);
