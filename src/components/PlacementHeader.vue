@@ -26,7 +26,7 @@
             </p>
 
         </div>
-        <div class="placement-btn-group">
+        <div>
             <custom-q-btn
                 @click="clearPlacement"
                 label="Clear Placement"
@@ -89,9 +89,6 @@ function confirmPlacement () {
 </script>
 
 <style scoped>
-.placement-btn-group {
-    margin: 1% 0% 1% 0%
-}
 .placement-panel {
     padding: 2%
 }
