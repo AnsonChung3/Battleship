@@ -10,12 +10,13 @@
                 class="buttonRow"
             />
             <p>
-                Click to rotate:
+                Current placement direction is
                 <custom-q-btn
                     @click="rotate"
                     :label=directionDisplay
                     class="buttonRow"
                 />
+                . Click to change.
             </p>
             <p>Alternatively, you can click to
                 <custom-q-btn
