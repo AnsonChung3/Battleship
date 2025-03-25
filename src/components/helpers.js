@@ -12,10 +12,6 @@ export function nextTurn () {
 };
 
 // manual placement mode
-export function resetSelectedID () {
-    store.manualSelectID = 999;
-};
-
 export function manualPlace (R, C) {
     activePlayer = store.p1Active ? store.p1 : store.p2;
     const ID = store.manualSelectID;
@@ -88,6 +84,9 @@ function directionRight () {
 }
 
 // placement method for both Auto and Manual
+export function resetSelectedID () {
+    store.manualSelectID = 999;
+};
 function doPlacement (R, C, shipLength, goRight, ID) {
     for (let i = 0; i < shipLength; i++) {
         if (goRight) {
