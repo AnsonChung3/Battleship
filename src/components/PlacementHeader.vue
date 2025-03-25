@@ -1,49 +1,31 @@
 <template>
     <div>
-        <q-card>
-            <q-tabs
-                v-model="tab"
-                active-color="bg-negative"
-                class="bg-1imary text-secondary"
-                dense
-            >
-                <q-tab name="auto"     label="Auto"/>
-                <q-tab name="manual"   label="Manual"/>
-            </q-tabs>
-            <q-tab-panels v-model="tab" class="bg-info">
-                <q-tab-panel name="auto">
-                    <div class="bg-info text-secondary">
-                        <p>Press button to auto place all ships.</p>
-                        <p>1 x 5-tile ship, 1 x 4-tile ship, 2 x 3-tile ship, 2 x 2-tile ship, 2 x 1-tile ship</p>
-                        <custom-q-btn
-                            @click="autoPlace"
-                            label="Auto Place"
-                            :disabled=isFullPlacement
-                        />
-                    </div>
-                </q-tab-panel>
-                <q-tab-panel name="manual">
-                    <div class="bg-info text-secondary">
-                        <p>Pick the size of ship you want to place</p>
-                        <custom-q-btn
-                            v-for="(ship) in shipsArray" :key="ship.ID"
-                            @click="shipSelect(ship.ID)"
-                            :label=ship.len
-                            :disabled="ship.isSet"
-                            class="buttonRow"
-                        />
-                        <p>
-                            Click to rotate:
-                            <custom-q-btn
-                                @click="rotate"
-                                :label=directionDisplay
-                                class="buttonRow"
-                            />
-                        </p>
-                    </div>
-                </q-tab-panel>
-            </q-tab-panels>
-        </q-card>
+        <div class="placement-panel bg-info text-secondary">
+            <p>Pick the size of ship you want to place</p>
+            <custom-q-btn
+                v-for="(ship) in shipsArray" :key="ship.ID"
+                @click="shipSelect(ship.ID)"
+                :label=ship.len
+                :disabled="ship.isSet"
+                class="buttonRow"
+            />
+            <p>
+                Click to rotate:
+                <custom-q-btn
+                    @click="rotate"
+                    :label=directionDisplay
+                    class="buttonRow"
+                />
+            </p>
+            <p>Alternatively, you can click to
+                <custom-q-btn
+                    @click="autoPlace"
+                    label="Place all"
+                    :disabled=isFullPlacement
+                />
+            </p>
+
+        </div>
         <div class="placement-btn-group">
             <custom-q-btn
                 @click="clearPlacement"
@@ -57,16 +39,14 @@
                 style="margin-right: 1%"
             />
         </div>
-        <placement-auto v-if="tab==='auto'"/>
-        <placement-manual v-else/>
+        <placement-board/>
     </div>
 </template>
 
 <script setup>
 import { ref, watch, computed, toRef, toRefs } from 'vue';
 import CustomQBtn from 'src/components/CustomQBtn.vue';
-import PlacementAuto from 'components/PlacementAuto.vue';
-import PlacementManual from 'components/PlacementManual.vue';
+import PlacementBoard from 'components/PlacementBoard.vue';
 import { autoPlace, resetSelectedID } from 'components/helpers.js';
 
 import { useBattleshipStore } from 'stores/battleship.js';
@@ -111,6 +91,9 @@ function confirmPlacement () {
 <style scoped>
 .placement-btn-group {
     margin: 1% 0% 1% 0%
+}
+.placement-panel {
+    padding: 2%
 }
 </style>
 
