@@ -44,15 +44,17 @@
                 </q-tab-panel>
             </q-tab-panels>
         </q-card>
-        <div>
+        <div class="placement-btn-group">
             <custom-q-btn
                 @click="clearPlacement"
                 label="Clear Placement"
+                style="margin-right: 1%"
             />
             <custom-q-btn
                 :disabled=!isFullPlacement
                 @click="confirmPlacement"
                 label="Confirm Placement"
+                style="margin-right: 1%"
             />
         </div>
         <placement-auto v-if="tab==='auto'"/>
@@ -105,3 +107,10 @@ function confirmPlacement () {
     resetSelectedID();
 }
 </script>
+
+<style scoped>
+.placement-btn-group {
+    margin: 1% 0% 1% 0%
+}
+</style>
+
