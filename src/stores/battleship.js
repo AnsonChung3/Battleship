@@ -22,6 +22,13 @@ export const useBattleshipStore = defineStore('battleship', () => {
 
     const gridWidth = 10;
     const shipLengths = [5, 4, 3, 3, 2, 2, 1, 1];
+    const shipNames = {
+        1: 'Patrol Boat',
+        2: 'Battleship',
+        3: 'Destroyer',
+        4: 'Submarine',
+        5: 'Carrier'
+    }
     function generateGrid (player) {
         player.grid = [];
         for (let R = 0; R < gridWidth; R++) {
@@ -43,6 +50,7 @@ export const useBattleshipStore = defineStore('battleship', () => {
             return {
                 len,
                 ID: index + 1,
+                name: shipNames[len.toString()],
                 isSet: false,
                 isSunk: false
             };

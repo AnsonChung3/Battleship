@@ -5,7 +5,7 @@
             <custom-q-btn
                 v-for="(ship) in shipsArray" :key="ship.ID"
                 @click="shipSelect(ship.ID)"
-                :label=ship.len
+                :label=ship.name
                 :disabled="ship.isSet"
                 class="buttonRow"
             />
