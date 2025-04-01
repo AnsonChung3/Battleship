@@ -30,7 +30,6 @@ import { nextTurn } from 'components/helpers.js';
 
 import { useBattleshipStore } from 'stores/battleship.js';
 const store = useBattleshipStore();
-const STATES = store.STATES;
 const COLORS = store.COLORS;
 
 const p1Active = toRef(store, 'p1Active');
@@ -47,7 +46,7 @@ const shipsArray = player.ships;
 function cellColor (R, C) {
     const cell = gridArray.value[R][C];
     if (homePanel.value) {
-        if (cell.placement === STATES.PLACED) {
+        if (cell.placement === 'PLACED') {
             if (cell.isHit) {
                 return COLORS.HIT;
             } else {
@@ -63,7 +62,7 @@ function cellColor (R, C) {
     } else {
         if (!cell.isHit) {
             return COLORS.BLANK;
-        } else if (cell.placement === STATES.PLACED) {
+        } else if (cell.placement === 'PLACED') {
             return COLORS.HIT;
         } else {
             return COLORS.MISS;
@@ -79,7 +78,7 @@ function isAttackLand (R, C) {
     }
     isAttackAbled.value = !isAttackAbled.value;
     checkCell.isHit = true;
-    if (checkCell.placement === STATES.PLACED && isDestroyed(checkCell.ID)) {
+    if (checkCell.placement === 'PLACED' && isDestroyed(checkCell.ID)) {
         shipsArray.value[checkCell.ID - 1].isSunk = true;
         const isEnd = shipsArray.value.every(ship => ship.isSunk);
         if (isEnd) {

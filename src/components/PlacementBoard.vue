@@ -19,7 +19,6 @@ import { manualPlace } from 'components/helpers.js';
 
 import { useBattleshipStore } from 'stores/battleship.js';
 const store = useBattleshipStore();
-const STATES = store.STATES;
 const COLORS = store.COLORS;
 
 const p1Active = toRef(store, 'p1Active');
@@ -32,13 +31,6 @@ const gridArray = player.grid;
 // 2. no need to change template code
 function cellColor (R, C) {
     const cell = player.grid.value[R][C];
-    if (cell.placement === STATES.PLACED) {
-        return COLORS.PLACED;
-    }
-    if (cell.placement === STATES.MARGIN) {
-        return COLORS.MARGIN;
-    } else {
-        return COLORS.BLANK;
-    }
+    return COLORS[cell.placement]
 }
 </script>

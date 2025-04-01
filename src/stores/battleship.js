@@ -36,8 +36,8 @@ export const useBattleshipStore = defineStore('battleship', () => {
             for (let C = 0; C < gridWidth; C++) {
                 rowArray.push({
                     coordinate: { R, C },
-                    display: STATES.BLANK,
-                    placement: STATES.BLANK,
+                    display: 'BLANK',
+                    placement: 'BLANK',
                     ID: 0,
                     isHit: false
                 });
@@ -63,14 +63,7 @@ export const useBattleshipStore = defineStore('battleship', () => {
         generateGrid(p2);
     }
 
-    // these 2 enums have no need for reactivity
-    const STATES = {
-        BLANK: 0,
-        PLACED: 1,
-        // MARGIN: 2,
-        HIT: 3,
-        MISS: 4
-    };
+    // enums have no need for reactivity
     const COLORS = {
         BLANK: '948C15',
         PLACED: '1F9415',
@@ -92,7 +85,6 @@ export const useBattleshipStore = defineStore('battleship', () => {
         p2,
         gridWidth,
         initGame,
-        STATES,
         COLORS,
         manualSelectID,
         manualGoRight,

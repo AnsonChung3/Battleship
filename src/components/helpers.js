@@ -1,6 +1,5 @@
 import { useBattleshipStore } from 'stores/battleship.js';
 const store = useBattleshipStore();
-const STATES = store.STATES;
 const WIDTH = store.gridWidth;
 let activePlayer = store.p1Active ? store.p1 : store.p2;
 
@@ -20,7 +19,7 @@ export function manualPlace (R, C) {
         alert('no ship is selected');
         return;
     }
-    if (activePlayer.grid[R][C].placement !== STATES.BLANK) {
+    if (activePlayer.grid[R][C].placement !== 'BLANK') {
         alert('invalid placement');
         return;
     }
@@ -66,7 +65,7 @@ function getRndStart (shipLength) {
 
     // while (cell is unavailable OR can't be placed in either direction) is true
     // {get a new random start}
-    while (rndCell.placement !== STATES.BLANK || (!right && !down)) {
+    while (rndCell.placement !== 'BLANK' || (!right && !down)) {
         R = getRandom(WIDTH);
         C = getRandom(WIDTH);
         rndCell = activePlayer.grid[R][C];
@@ -165,8 +164,7 @@ function placeRightSuccess (R, C, shipLength) {
             return false;
         }
         const cell = activePlayer.grid[R][col];
-        // if (cell.placement !== STATES.BLANK) {
-        if (cell.placement === STATES.PLACED) {
+        if (cell.placement === 'PLACED') {
             return false;
         }
     }
@@ -179,16 +177,15 @@ function placeDownSuccess (R, C, shipLength) {
             return false;
         }
         const cell = activePlayer.grid[row][C];
-        // if (cell.placement !== STATES.BLANK) {
-        if (cell.placement === STATES.PLACED) {
+        if (cell.placement === 'PLACED') {
             return false;
         }
     }
     return true;
 }
 function colorShip (R, C, ID) {
-    activePlayer.grid[R][C].display = STATES.PLACED;
-    activePlayer.grid[R][C].placement = STATES.PLACED;
+    activePlayer.grid[R][C].display = 'PLACED';
+    activePlayer.grid[R][C].placement = 'PLACED';
     activePlayer.grid[R][C].ID = ID;
 }
 // function colorMargin (R, C) {

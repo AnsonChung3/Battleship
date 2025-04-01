@@ -52,7 +52,6 @@ import { autoPlace, resetSelectedID } from 'components/helpers.js';
 
 import { useBattleshipStore } from 'stores/battleship.js';
 const store = useBattleshipStore();
-const STATES = store.STATES;
 
 const p1Active = toRef(store, 'p1Active');
 const player = p1Active.value ? toRefs(store.p1) : toRefs(store.p2);
@@ -75,8 +74,8 @@ function shipSelect (ID) {
 const isFullPlacement = computed(() => shipsArray.value.every((ship) => ship.isSet));
 function clearPlacement () {
     gridArray.value.forEach(row => row.forEach(cell => {
-        cell.display = STATES.BLANK;
-        cell.placement = STATES.BLANK;
+        cell.display = 'BLANK';
+        cell.placement = 'BLANK';
         cell.ID = 0;
     }));
     shipsArray.value.forEach(ship => { ship.isSet = false; });
