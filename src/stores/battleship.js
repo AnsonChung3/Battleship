@@ -67,14 +67,14 @@ export const useBattleshipStore = defineStore('battleship', () => {
     const STATES = {
         BLANK: 0,
         PLACED: 1,
-        MARGIN: 2,
+        // MARGIN: 2,
         HIT: 3,
         MISS: 4
     };
     const COLORS = {
         BLANK: '948C15',
         PLACED: '1F9415',
-        MARGIN: '13468C',
+        // MARGIN: '13468C',
         HIT: '921313',
         MISS: '383232'
     };

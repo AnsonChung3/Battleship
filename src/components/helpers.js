@@ -92,69 +92,69 @@ function doPlacement (R, C, shipLength, goRight, ID) {
         if (goRight) {
             colorShip(R, C + i, ID);
             // color left/right end of ship once
-            if (i === 0) {
-                // left end, top, bottm
-                if (C >= 1) {
-                    colorMargin(R, C - 1);
-                    if (R >= 1) {
-                        colorMargin(R - 1, C - 1);
-                    }
-                    if (R + 1 < WIDTH) {
-                        colorMargin(R + 1, C - 1);
-                    }
-                }
-                // right end, top, bottm
-                if (C + shipLength < WIDTH) {
-                    colorMargin(R, C + shipLength);
-                    if (R >= 1) {
-                        colorMargin(R - 1, C + shipLength);
-                    }
-                    if (R + 1 < WIDTH) {
-                        colorMargin(R + 1, C + shipLength);
-                    }
-                }
-            }
-            // if the row above exist, color cell above
-            if (R >= 1) {
-                colorMargin(R - 1, C + i);
-            }
-            // if bottom row existm coloe cell below
-            if (R + 1 < WIDTH) {
-                colorMargin(R + 1, C + i);
-            }
+            // if (i === 0) {
+            //     // left end, top, bottm
+            //     if (C >= 1) {
+            //         colorMargin(R, C - 1);
+            //         if (R >= 1) {
+            //             colorMargin(R - 1, C - 1);
+            //         }
+            //         if (R + 1 < WIDTH) {
+            //             colorMargin(R + 1, C - 1);
+            //         }
+            //     }
+            //     // right end, top, bottm
+            //     if (C + shipLength < WIDTH) {
+            //         colorMargin(R, C + shipLength);
+            //         if (R >= 1) {
+            //             colorMargin(R - 1, C + shipLength);
+            //         }
+            //         if (R + 1 < WIDTH) {
+            //             colorMargin(R + 1, C + shipLength);
+            //         }
+            //     }
+            // }
+            // // if the row above exist, color cell above
+            // if (R >= 1) {
+            //     colorMargin(R - 1, C + i);
+            // }
+            // // if bottom row existm coloe cell below
+            // if (R + 1 < WIDTH) {
+            //     colorMargin(R + 1, C + i);
+            // }
         } else {
             colorShip(R + i, C, ID);
             // color top/bottom ends once
-            if (i === 0) {
-                // top end, left, right
-                if (R >= 1) {
-                    colorMargin(R - 1, C);
-                    if (C >= 1) {
-                        colorMargin(R - 1, C - 1);
-                    }
-                    if (C + 1 < WIDTH) {
-                        colorMargin(R - 1, C + 1);
-                    }
-                }
-                // bottom end, left, right
-                if (R + shipLength < WIDTH) {
-                    colorMargin(R + shipLength, C);
-                    if (C >= 1) {
-                        colorMargin(R + shipLength, C - 1);
-                    }
-                    if (C + 1 < WIDTH) {
-                        colorMargin(R + shipLength, C + 1);
-                    }
-                }
-            }
-            // left col
-            if (C >= 1) {
-                colorMargin(R + i, C - 1);
-            }
-            // right col
-            if (C + 1 < WIDTH) {
-                colorMargin(R + i, C + 1);
-            }
+            // if (i === 0) {
+            //     // top end, left, right
+            //     if (R >= 1) {
+            //         colorMargin(R - 1, C);
+            //         if (C >= 1) {
+            //             colorMargin(R - 1, C - 1);
+            //         }
+            //         if (C + 1 < WIDTH) {
+            //             colorMargin(R - 1, C + 1);
+            //         }
+            //     }
+            //     // bottom end, left, right
+            //     if (R + shipLength < WIDTH) {
+            //         colorMargin(R + shipLength, C);
+            //         if (C >= 1) {
+            //             colorMargin(R + shipLength, C - 1);
+            //         }
+            //         if (C + 1 < WIDTH) {
+            //             colorMargin(R + shipLength, C + 1);
+            //         }
+            //     }
+            // }
+            // // left col
+            // if (C >= 1) {
+            //     colorMargin(R + i, C - 1);
+            // }
+            // // right col
+            // if (C + 1 < WIDTH) {
+            //     colorMargin(R + i, C + 1);
+            // }
         }
     }
 }
@@ -165,7 +165,8 @@ function placeRightSuccess (R, C, shipLength) {
             return false;
         }
         const cell = activePlayer.grid[R][col];
-        if (cell.placement !== STATES.BLANK) {
+        // if (cell.placement !== STATES.BLANK) {
+        if (cell.placement === STATES.PLACED) {
             return false;
         }
     }
@@ -178,7 +179,8 @@ function placeDownSuccess (R, C, shipLength) {
             return false;
         }
         const cell = activePlayer.grid[row][C];
-        if (cell.placement !== STATES.BLANK) {
+        // if (cell.placement !== STATES.BLANK) {
+        if (cell.placement === STATES.PLACED) {
             return false;
         }
     }
@@ -189,10 +191,10 @@ function colorShip (R, C, ID) {
     activePlayer.grid[R][C].placement = STATES.PLACED;
     activePlayer.grid[R][C].ID = ID;
 }
-function colorMargin (R, C) {
-    activePlayer.grid[R][C].display = STATES.MARGIN;
-    activePlayer.grid[R][C].placement = STATES.MARGIN;
-}
+// function colorMargin (R, C) {
+//     activePlayer.grid[R][C].display = STATES.MARGIN;
+//     activePlayer.grid[R][C].placement = STATES.MARGIN;
+// }
 
 export function newGame () {
     store.p1.placementConfirmed = false;
