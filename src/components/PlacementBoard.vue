@@ -33,7 +33,7 @@ const gridArray = player.grid;
 function cellColor (R, C) {
     const cell = player.grid.value[R][C];
     if (cell.placement === STATES.PLACED) {
-        return COLORS.HIT;
+        return COLORS.PLACED;
     }
     if (cell.placement === STATES.MARGIN) {
         return COLORS.MARGIN;
