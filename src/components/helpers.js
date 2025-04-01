@@ -3,13 +3,6 @@ const store = useBattleshipStore();
 const WIDTH = store.gridWidth;
 let activePlayer = store.p1Active ? store.p1 : store.p2;
 
-// game play
-export function nextTurn () {
-    store.turnInterval = !store.turnInterval;
-    store.p1Active = !store.p1Active;
-    store.isAttackAbled = !store.isAttackAbled;
-};
-
 // manual placement mode
 export function manualPlace (R, C) {
     activePlayer = store.p1Active ? store.p1 : store.p2;

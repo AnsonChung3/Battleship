@@ -26,7 +26,6 @@
 
 <script setup>
 import { toRef, toRefs, computed } from 'vue';
-import { nextTurn } from 'components/helpers.js';
 
 import { useBattleshipStore } from 'stores/battleship.js';
 const store = useBattleshipStore();
@@ -89,7 +88,7 @@ function isAttackLand (R, C) {
     const opponent = !p1.value ? toRefs(store.p1) : toRefs(store.p2);
     if (!homePanel.value && opponent.autoTurn.value) {
         setTimeout(() => {
-            nextTurn();
+            store.nextTurn();
         }, 1500);
     }
 }

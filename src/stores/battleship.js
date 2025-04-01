@@ -76,8 +76,16 @@ export const useBattleshipStore = defineStore('battleship', () => {
     const manualSelectID = ref(1);
 
     const gameEnd = ref(false);
+
+    // game play
     const turnInterval = ref(false);
     const isAttackAbled = ref(true);
+    function nextTurn () {
+        console.log('store next turn')
+        turnInterval.value = !turnInterval.value;
+        p1Active.value = !p1Active.value;
+        isAttackAbled.value = !isAttackAbled.value;
+    };
 
     return {
         p1Active,
@@ -90,6 +98,7 @@ export const useBattleshipStore = defineStore('battleship', () => {
         manualGoRight,
         gameEnd,
         turnInterval,
-        isAttackAbled
+        isAttackAbled,
+        nextTurn
     };
 });
