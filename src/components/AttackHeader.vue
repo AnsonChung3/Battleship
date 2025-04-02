@@ -23,7 +23,7 @@
                     <custom-q-btn
                         v-if="manualTurn"
                         label="end turn"
-                        @click="nextTurn"
+                        @click="store.nextTurn"
                     />
                 </div>
             </q-card-section>
@@ -35,7 +35,6 @@
 import { toRefs, toRef, computed } from 'vue';
 import ProgressQBtn from 'src/components/ProgressQBtn.vue';
 import CustomQBtn from 'src/components/CustomQBtn.vue';
-import { nextTurn } from 'components/helpers.js';
 
 const props = defineProps({
     p1: Boolean

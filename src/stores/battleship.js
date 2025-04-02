@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { ref, reactive } from 'vue';
+import { ref, reactive, computed } from 'vue';
 
 export const useBattleshipStore = defineStore('battleship', () => {
     const p1Active = ref(true);
@@ -19,7 +19,7 @@ export const useBattleshipStore = defineStore('battleship', () => {
         grid: [],
         ships: []
     });
-
+    const activePlayer = computed(() => { return p1Active.value ? p1 : p2 });
     const gridWidth = 10;
     const shipLengths = [5, 4, 3, 3, 2, 2, 1, 1];
     const shipNames = {
@@ -62,6 +62,81 @@ export const useBattleshipStore = defineStore('battleship', () => {
         generateGrid(p1);
         generateGrid(p2);
     }
+    function newGame () {
+        p1.placementConfirmed = false;
+        p2.placementConfirmed = false;
+        initGame();
+    }
+
+    // manual placement mode
+    function manualPlace (R, C) {
+        const ID = manualSelectID.value;
+        const goRight = manualGoRight.value;
+        if (ID === 999) {
+            alert('no ship is selected');
+            return;
+        }
+        if (activePlayer.value.grid[R][C].placement !== 'BLANK') {
+            alert('invalid placement');
+            return;
+        }
+        const len = activePlayer.value.ships[ID - 1].len;
+        if ((goRight && placeRightSuccess(R, C, len)) || (!goRight && placeDownSuccess(R, C, len))) {
+            doPlacement(R, C, len, goRight, ID);
+            activePlayer.value.ships[ID - 1].isSet = true;
+            resetSelectedID();
+        } else {
+            alert('Not enough room!');
+        }
+    }
+
+    // auto placement mode
+    function autoPlace () {
+        // active player needs to be refreshed at the beginning of the placement
+        activePlayer.value.ships.forEach((ship) => {
+            shipPlacement(ship.len, ship.ID);
+            ship.isSet = true;
+        });
+    }
+    function shipPlacement (shipLength, ID) {
+        // e.g. startCell = {R: 1, C: 2}
+        const startCell = getRndStart(shipLength);
+        const R = startCell.R;
+        const C = startCell.C;
+        if (shipLength === 1) {
+            doPlacement(R, C, shipLength, true, ID);
+            return;
+        }
+        const right = startCell.right;
+        const down = startCell.down;
+        const goRight = !right ? false : (right && down) ? directionRight() : true;
+        doPlacement(R, C, shipLength, goRight, ID);
+    }
+    function getRndStart (shipLength) {
+        let R = getRandom(gridWidth);
+        let C = getRandom(gridWidth);
+        let rndCell = activePlayer.value.grid[R][C];
+        let right = placeRightSuccess(R, C, shipLength);
+        let down = placeDownSuccess(R, C, shipLength);
+
+        // while (cell is unavailable OR can't be placed in either direction) is true
+        // {get a new random start}
+        while (rndCell.placement !== 'BLANK' || (!right && !down)) {
+            R = getRandom(gridWidth);
+            C = getRandom(gridWidth);
+            rndCell = activePlayer.value.grid[R][C];
+            right = placeRightSuccess(R, C, shipLength);
+            down = placeDownSuccess(R, C, shipLength);
+        }
+        return { R, C, right, down };
+    }
+    function getRandom (max) {
+        return Math.floor(Math.random() * max);
+    }
+    function directionRight () {
+        // rnd when right and down are both viable
+        return (Math.random() < 0.5);
+    }
 
     // enums have no need for reactivity
     const COLORS = {
@@ -72,12 +147,66 @@ export const useBattleshipStore = defineStore('battleship', () => {
         MISS: '383232'
     };
 
+
+    // placement method for both Auto and Manual
+    function resetSelectedID () {
+        manualSelectID.value = 999;
+    };
+    function doPlacement (R, C, shipLength, goRight, ID) {
+        for (let i = 0; i < shipLength; i++) {
+            if (goRight) {
+                colorShip(R, C + i, ID);
+            } else {
+                colorShip(R + i, C, ID);
+            }
+        }
+    }
+    function placeRightSuccess (R, C, shipLength) {
+        for (let len = 1; len < shipLength; len++) {
+            const col = C + len;
+            if (col >= gridWidth) {
+                return false;
+            }
+            const cell = activePlayer.value.grid[R][col];
+            if (cell.placement === 'PLACED') {
+                return false;
+            }
+        }
+        return true;
+    }
+    function placeDownSuccess (R, C, shipLength) {
+        for (let len = 1; len < shipLength; len++) {
+            const row = R + len;
+            if (row >= gridWidth) {
+                return false;
+            }
+            const cell = activePlayer.value.grid[row][C];
+            if (cell.placement === 'PLACED') {
+                return false;
+            }
+        }
+        return true;
+    }
+    function colorShip (R, C, ID) {
+        activePlayer.value.grid[R][C].display = 'PLACED';
+        activePlayer.value.grid[R][C].placement = 'PLACED';
+        activePlayer.value.grid[R][C].ID = ID;
+    }
+
     const manualGoRight = ref(true);
-    const manualSelectID = ref(999);
+    const manualSelectID = ref(1);
 
     const gameEnd = ref(false);
+
+    // game play
     const turnInterval = ref(false);
     const isAttackAbled = ref(true);
+    function nextTurn () {
+        console.log('store next turn')
+        turnInterval.value = !turnInterval.value;
+        p1Active.value = !p1Active.value;
+        isAttackAbled.value = !isAttackAbled.value;
+    };
 
     return {
         p1Active,
@@ -85,11 +214,16 @@ export const useBattleshipStore = defineStore('battleship', () => {
         p2,
         gridWidth,
         initGame,
+        newGame,
+        autoPlace,
         COLORS,
         manualSelectID,
         manualGoRight,
         gameEnd,
         turnInterval,
-        isAttackAbled
+        isAttackAbled,
+        nextTurn,
+        resetSelectedID,
+        manualPlace
     };
 });
