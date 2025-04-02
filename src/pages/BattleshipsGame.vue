@@ -10,7 +10,7 @@
                     <q-card-actions align="center">
                         <q-btn
                             label="start new"
-                            @click="newGame"
+                            @click="store.newGame"
                             v-close-popup
                             outline
                         />
@@ -56,7 +56,6 @@
 
 <script setup>
 import { computed } from 'vue';
-import { newGame } from 'components/helpers.js';
 import PlacementHeader from 'components/PlacementHeader.vue';
 import AttackHeader from 'components/AttackHeader.vue';
 import AttackPanel from 'components/AttackPanel.vue';

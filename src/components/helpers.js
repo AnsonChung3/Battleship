@@ -119,9 +119,3 @@ function colorShip (R, C, ID) {
     activePlayer.grid[R][C].placement = 'PLACED';
     activePlayer.grid[R][C].ID = ID;
 }
-
-export function newGame () {
-    store.p1.placementConfirmed = false;
-    store.p2.placementConfirmed = false;
-    store.initGame();
-}

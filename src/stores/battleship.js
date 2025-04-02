@@ -62,6 +62,11 @@ export const useBattleshipStore = defineStore('battleship', () => {
         generateGrid(p1);
         generateGrid(p2);
     }
+    function newGame () {
+        p1.placementConfirmed = false;
+        p2.placementConfirmed = false;
+        initGame();
+    }
 
     // enums have no need for reactivity
     const COLORS = {
@@ -93,6 +98,7 @@ export const useBattleshipStore = defineStore('battleship', () => {
         p2,
         gridWidth,
         initGame,
+        newGame,
         COLORS,
         manualSelectID,
         manualGoRight,
