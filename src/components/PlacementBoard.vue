@@ -3,7 +3,7 @@
          <div v-for="(row, R) in gridArray" :key="R">
             <div class="inline" v-for="(cell, C) in row" :key="C">
                 <div
-                    @click="manualPlace(R, C)"
+                    @click="store.manualPlace(R, C)"
                     class="cell"
                     :style="{background: '#'+cellColor(R, C)}"
                 >
@@ -15,7 +15,6 @@
 
 <script setup>
 import { toRef, toRefs } from 'vue';
-import { manualPlace } from 'components/helpers.js';
 
 import { useBattleshipStore } from 'stores/battleship.js';
 const store = useBattleshipStore();

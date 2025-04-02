@@ -20,7 +20,7 @@
             </p>
             <p>Alternatively, you can click to
                 <custom-q-btn
-                    @click="autoPlace"
+                    @click="store.autoPlace"
                     label="Place all"
                     :disabled=isFullPlacement
                 />
@@ -48,7 +48,6 @@
 import { ref, watch, computed, toRef, toRefs } from 'vue';
 import CustomQBtn from 'src/components/CustomQBtn.vue';
 import PlacementBoard from 'components/PlacementBoard.vue';
-import { autoPlace, resetSelectedID } from 'components/helpers.js';
 
 import { useBattleshipStore } from 'stores/battleship.js';
 const store = useBattleshipStore();
@@ -79,12 +78,12 @@ function clearPlacement () {
         cell.ID = 0;
     }));
     shipsArray.value.forEach(ship => { ship.isSet = false; });
-    resetSelectedID();
+    store.resetSelectedID();
 }
 function confirmPlacement () {
     player.placementConfirmed.value = true;
     p1Active.value = !p1Active.value;
-    resetSelectedID();
+    store.resetSelectedID();
 }
 </script>
 
