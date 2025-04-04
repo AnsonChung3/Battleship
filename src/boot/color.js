@@ -6,4 +6,5 @@ export default () => {
     setCssVar('negative', '#929292');
     setCssVar('info', '#B2B2B2');
     setCssVar('warning', '#B61A1A');
+    setCssVar('accent', '#cdc21e');
 };

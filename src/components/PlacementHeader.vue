@@ -8,6 +8,7 @@
                 :label=ship.name
                 :disabled="ship.isSet"
                 class="buttonRow"
+                :color="selectedBtnBkg(ship.ID)"
             />
             <p>
                 Current placement direction is
@@ -25,7 +26,6 @@
                     :disabled=isFullPlacement
                 />
             </p>
-
         </div>
         <div>
             <custom-q-btn
@@ -62,6 +62,14 @@ watch(tab, (newtab) => {
     clearPlacement();
 });
 
+function selectedBtnBkg (id) {
+    if (id === store.manualSelectID) {
+        return 'accent';
+    } else {
+        return 'primary';
+    }
+};
+
 const directionDisplay = computed(() => store.manualGoRight ? 'Right' : 'Down');
 function rotate () {
     store.manualGoRight = !store.manualGoRight;
@@ -78,12 +86,10 @@ function clearPlacement () {
         cell.ID = 0;
     }));
     shipsArray.value.forEach(ship => { ship.isSet = false; });
-    store.resetSelectedID();
 }
 function confirmPlacement () {
     player.placementConfirmed.value = true;
     p1Active.value = !p1Active.value;
-    store.resetSelectedID();
 }
 </script>
 
@@ -92,4 +98,3 @@ function confirmPlacement () {
     padding: 2%
 }
 </style>
-

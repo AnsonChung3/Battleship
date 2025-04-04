@@ -84,7 +84,6 @@ export const useBattleshipStore = defineStore('battleship', () => {
         if ((goRight && placeRightSuccess(R, C, len)) || (!goRight && placeDownSuccess(R, C, len))) {
             doPlacement(R, C, len, goRight, ID);
             activePlayer.value.ships[ID - 1].isSet = true;
-            resetSelectedID();
         } else {
             alert('Not enough room!');
         }
@@ -149,9 +148,6 @@ export const useBattleshipStore = defineStore('battleship', () => {
 
 
     // placement method for both Auto and Manual
-    function resetSelectedID () {
-        manualSelectID.value = 999;
-    };
     function doPlacement (R, C, shipLength, goRight, ID) {
         for (let i = 0; i < shipLength; i++) {
             if (goRight) {
@@ -194,7 +190,11 @@ export const useBattleshipStore = defineStore('battleship', () => {
     }
 
     const manualGoRight = ref(true);
-    const manualSelectID = ref(1);
+    const manualSelectID = computed(() => {
+        const firstEmptyShip = activePlayer.value.ships.find((ship) => ship.isSet === false)
+        console.log(firstEmptyShip.ID)
+        return firstEmptyShip.ID !== undefined ? firstEmptyShip.ID : 999
+    });
 
     const gameEnd = ref(false);
 
@@ -223,7 +223,6 @@ export const useBattleshipStore = defineStore('battleship', () => {
         turnInterval,
         isAttackAbled,
         nextTurn,
-        resetSelectedID,
         manualPlace
     };
 });
