@@ -45,7 +45,7 @@
 </template>
 
 <script setup>
-import { ref, watch, computed, toRef, toRefs } from 'vue';
+import { computed, toRef, toRefs } from 'vue';
 import CustomQBtn from 'src/components/CustomQBtn.vue';
 import PlacementBoard from 'components/PlacementBoard.vue';
 
@@ -56,11 +56,6 @@ const p1Active = toRef(store, 'p1Active');
 const player = p1Active.value ? toRefs(store.p1) : toRefs(store.p2);
 const gridArray = player.grid;
 const shipsArray = player.ships;
-
-const tab = ref('auto');
-watch(tab, (newtab) => {
-    clearPlacement();
-});
 
 function selectedBtnBkg (id) {
     if (id === store.manualSelectID) {
