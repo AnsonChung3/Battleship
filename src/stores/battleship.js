@@ -76,10 +76,6 @@ export const useBattleshipStore = defineStore('battleship', () => {
             alert('no ship is selected');
             return;
         }
-        if (activePlayer.value.grid[R][C].placement !== 'BLANK') {
-            alert('invalid placement');
-            return;
-        }
         const len = activePlayer.value.ships[ID - 1].len;
         if ((goRight && placeRightSuccess(R, C, len)) || (!goRight && placeDownSuccess(R, C, len))) {
             doPlacement(R, C, len, goRight, ID);

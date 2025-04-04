@@ -3,7 +3,7 @@
          <div v-for="(row, R) in gridArray" :key="R">
             <div class="inline" v-for="(cell, C) in row" :key="C">
                 <div
-                    @click="store.manualPlace(R, C)"
+                    @click="prePlace(R, C)"
                     class="cell"
                     :style="{background: '#'+cellColor(R, C)}"
                 >
@@ -31,5 +31,10 @@ const gridArray = player.grid;
 function cellColor (R, C) {
     const cell = player.grid.value[R][C];
     return COLORS[cell.placement]
+}
+
+function prePlace (R, C) {
+    if (player.grid.value[R][C].placement === 'PLACED') { return };
+    store.manualPlace(R, C)
 }
 </script>
