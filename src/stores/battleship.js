@@ -188,8 +188,7 @@ export const useBattleshipStore = defineStore('battleship', () => {
     const manualGoRight = ref(true);
     const manualSelectID = computed(() => {
         const firstEmptyShip = activePlayer.value.ships.find((ship) => ship.isSet === false)
-        console.log(firstEmptyShip.ID)
-        return firstEmptyShip.ID !== undefined ? firstEmptyShip.ID : 999
+        return firstEmptyShip !== undefined ? firstEmptyShip.ID : 999
     });
 
     const gameEnd = ref(false);
