@@ -34,7 +34,8 @@ function cellColor (R, C) {
 }
 
 function prePlace (R, C) {
-    if (player.grid.value[R][C].placement === 'PLACED') { return };
+    // if cell is occupied or no more ships to be placed, manualPlace will not fire
+    if (player.grid.value[R][C].placement === 'PLACED' || player.ships.value.every((ship) => ship.isSet)) { return };
     store.manualPlace(R, C)
 }
 </script>

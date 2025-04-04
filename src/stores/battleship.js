@@ -72,10 +72,6 @@ export const useBattleshipStore = defineStore('battleship', () => {
     function manualPlace (R, C) {
         const ID = manualSelectID.value;
         const goRight = manualGoRight.value;
-        if (ID === 999) {
-            alert('no ship is selected');
-            return;
-        }
         const len = activePlayer.value.ships[ID - 1].len;
         if ((goRight && placeRightSuccess(R, C, len)) || (!goRight && placeDownSuccess(R, C, len))) {
             doPlacement(R, C, len, goRight, ID);
