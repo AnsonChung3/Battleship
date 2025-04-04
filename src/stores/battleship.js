@@ -83,7 +83,6 @@ export const useBattleshipStore = defineStore('battleship', () => {
 
     // auto placement mode
     function autoPlace () {
-        // active player needs to be refreshed at the beginning of the placement
         activePlayer.value.ships.forEach((ship) => {
             shipPlacement(ship.len, ship.ID);
             ship.isSet = true;
@@ -139,6 +138,14 @@ export const useBattleshipStore = defineStore('battleship', () => {
 
 
     // placement method for both Auto and Manual
+    function clearPlacement () {
+        activePlayer.value.grid.forEach(row => row.forEach(cell => {
+            cell.display = 'BLANK';
+            cell.placement = 'BLANK';
+            cell.ID = 0;
+        }));
+        activePlayer.value.ships.forEach(ship => { ship.isSet = false; });
+    }
     function doPlacement (R, C, shipLength, goRight, ID) {
         for (let i = 0; i < shipLength; i++) {
             if (goRight) {
@@ -213,6 +220,7 @@ export const useBattleshipStore = defineStore('battleship', () => {
         turnInterval,
         isAttackAbled,
         nextTurn,
-        manualPlace
+        manualPlace,
+        clearPlacement
     };
 });

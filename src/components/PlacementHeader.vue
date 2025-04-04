@@ -21,15 +21,14 @@
             </p>
             <p>Alternatively, you can click to
                 <custom-q-btn
-                    @click="store.autoPlace"
+                    @click="preAuto"
                     label="Place all"
-                    :disabled=isFullPlacement
                 />
             </p>
         </div>
         <div>
             <custom-q-btn
-                @click="clearPlacement"
+                @click="store.clearPlacement"
                 label="Clear Placement"
                 style="margin-right: 1%"
             />
@@ -54,7 +53,6 @@ const store = useBattleshipStore();
 
 const p1Active = toRef(store, 'p1Active');
 const player = p1Active.value ? toRefs(store.p1) : toRefs(store.p2);
-const gridArray = player.grid;
 const shipsArray = player.ships;
 
 function selectedBtnBkg (id) {
@@ -74,18 +72,14 @@ function shipSelect (ID) {
 };
 
 const isFullPlacement = computed(() => shipsArray.value.every((ship) => ship.isSet));
-function clearPlacement () {
-    gridArray.value.forEach(row => row.forEach(cell => {
-        cell.display = 'BLANK';
-        cell.placement = 'BLANK';
-        cell.ID = 0;
-    }));
-    shipsArray.value.forEach(ship => { ship.isSet = false; });
-}
+function preAuto () {
+    store.clearPlacement();
+    store.autoPlace();
+};
 function confirmPlacement () {
     player.placementConfirmed.value = true;
     p1Active.value = !p1Active.value;
-}
+};
 </script>
 
 <style scoped>
