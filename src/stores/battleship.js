@@ -81,6 +81,37 @@ export const useBattleshipStore = defineStore('battleship', () => {
         }
     }
 
+    function hoverOverCell (R, C) {
+        const ID = manualSelectID.value;
+        const goRight = manualGoRight.value;
+        const len = activePlayer.value.ships[ID - 1].len;
+        if ((goRight && placeRightSuccess(R, C, len)) || (!goRight && placeDownSuccess(R, C, len))) {
+            hoverColoring(R, C, len, goRight, ID);
+        }
+    }
+
+    function hoverColoring (R, C, len, goRight) {
+        for (let i = 0; i < len; i++) {
+            if (goRight) {
+                activePlayer.value.grid[R][C + i].display = 'HOVER';
+            } else {
+                activePlayer.value.grid[R + i][C].display = 'HOVER';
+            }
+        }
+    }
+
+    function removeHover (R, C) {
+        const ID = manualSelectID.value;
+        const len = activePlayer.value.ships[ID - 1].len;
+        for (let i = 0; i < len; i++) {
+            if (manualGoRight.value) {
+                activePlayer.value.grid[R][C + i].display = activePlayer.value.grid[R][C + i].placement;
+            } else {
+                activePlayer.value.grid[R + i][C].display = activePlayer.value.grid[R + i][C].placement;
+            }
+        }
+    }
+
     // auto placement mode
     function autoPlace () {
         activePlayer.value.ships.forEach((ship) => {
@@ -132,6 +163,7 @@ export const useBattleshipStore = defineStore('battleship', () => {
     const COLORS = {
         BLANK: '948C15',
         PLACED: '1F9415',
+        HOVER: '4f9749',
         HIT: '921313',
         MISS: '383232'
     };
@@ -221,6 +253,8 @@ export const useBattleshipStore = defineStore('battleship', () => {
         isAttackAbled,
         nextTurn,
         manualPlace,
-        clearPlacement
+        clearPlacement,
+        hoverOverCell,
+        removeHover
     };
 });
