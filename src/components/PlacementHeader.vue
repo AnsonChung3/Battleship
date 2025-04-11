@@ -29,13 +29,11 @@
             <custom-q-btn
                 @click="store.clearPlacement"
                 label="Clear Placement"
-                style="margin-right: 1%"
             />
             <custom-q-btn
                 :disabled=!isFullPlacement
                 @click="store.confirmPlacement"
                 label="Confirm Placement"
-                style="margin-right: 1%"
             />
         </div>
         <placement-board/>
