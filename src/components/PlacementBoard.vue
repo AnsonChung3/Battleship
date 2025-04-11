@@ -1,6 +1,6 @@
 <template>
     <div>
-         <div v-for="(row, R) in player.grid.value" :key="R">
+         <div v-for="(row, R) in store.activePlayer.grid" :key="R">
             <div class="inline" v-for="(cell, C) in row" :key="C">
                 <div
                     @click="prePlace(R, C)"
@@ -16,30 +16,22 @@
 </template>
 
 <script setup>
-import { toRefs } from 'vue';
-
 import { useBattleshipStore } from 'stores/battleship.js';
 const store = useBattleshipStore();
 
-const player = toRefs(store.activePlayer);
-
-// this function has the same name as the one in AttackPanel
-// because they were from the same function
-// keeping the same name 1. they are in different component
-// 2. no need to change template code
 function cellColor (R, C) {
-    const cell = player.grid.value[R][C];
+    const cell = store.activePlayer.grid[R][C];
     return store.COLORS[cell.display]
 }
 
 function prePlace (R, C) {
     // if cell is occupied or no more ships to be placed, manualPlace will not fire
-    if (player.grid.value[R][C].placement === 'PLACED' || player.ships.value.every((ship) => ship.isSet)) { return };
+    if (store.activePlayer.grid[R][C].placement === 'PLACED' || store.activePlayer.ships.every((ship) => ship.isSet)) { return };
     store.manualPlace(R, C)
 }
 
 function customMouseEnter (R, C) {
-    const cell = player.grid.value[R][C];
+    const cell = store.activePlayer.grid[R][C];
     if (cell.placement !== 'PLACED') {
         store.hoverOverCell(R, C)
     }
