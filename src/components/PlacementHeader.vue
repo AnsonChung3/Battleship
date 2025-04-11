@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="placement-panel bg-info text-secondary">
-            <p>Pick the size of ship you want to place</p>
+            <p>Place your ships on the board!</p>
             <custom-q-btn
                 v-for="(ship) in store.activePlayer.ships" :key="ship.ID"
                 :label=ship.name
@@ -16,7 +16,7 @@
                     :label=directionDisplay
                     class="buttonRow"
                 />
-                . Click to change.
+                . Click button or press "R" to change.
             </p>
             <p>Alternatively, you can click to
                 <custom-q-btn

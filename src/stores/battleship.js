@@ -100,14 +100,10 @@ export const useBattleshipStore = defineStore('battleship', () => {
         }
     }
 
-    function removeHover (R, C) {
-        const ID = manualSelectID.value;
-        const len = activePlayer.value.ships[ID - 1].len;
-        for (let i = 0; i < len; i++) {
-            if (manualGoRight.value) {
-                activePlayer.value.grid[R][C + i].display = activePlayer.value.grid[R][C + i].placement;
-            } else {
-                activePlayer.value.grid[R + i][C].display = activePlayer.value.grid[R + i][C].placement;
+    function removeHover () {
+        for (let r = 0; r < gridWidth; r++) {
+            for (let c = 0; c < gridWidth; c++) {
+                activePlayer.value.grid[r][c].display = activePlayer.value.grid[r][c].placement;
             }
         }
     }
