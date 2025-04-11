@@ -112,8 +112,13 @@ export const useBattleshipStore = defineStore('battleship', () => {
         }
     }
 
+    function rotate () {
+        manualGoRight.value = !manualGoRight.value;
+    }
+
     // auto placement mode
     function autoPlace () {
+        clearPlacement()
         activePlayer.value.ships.forEach((ship) => {
             shipPlacement(ship.len, ship.ID);
             ship.isSet = true;
@@ -177,6 +182,10 @@ export const useBattleshipStore = defineStore('battleship', () => {
             cell.ID = 0;
         }));
         activePlayer.value.ships.forEach(ship => { ship.isSet = false; });
+    }
+    function confirmPlacement () {
+        activePlayer.value.placementConfirmed = true;
+        p1Active.value = !p1Active.value;
     }
     function doPlacement (R, C, shipLength, goRight, ID) {
         for (let i = 0; i < shipLength; i++) {
@@ -255,6 +264,9 @@ export const useBattleshipStore = defineStore('battleship', () => {
         manualPlace,
         clearPlacement,
         hoverOverCell,
-        removeHover
+        removeHover,
+        activePlayer,
+        confirmPlacement,
+        rotate
     };
 });

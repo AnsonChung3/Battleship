@@ -3,7 +3,7 @@
         <div class="placement-panel bg-info text-secondary">
             <p>Pick the size of ship you want to place</p>
             <custom-q-btn
-                v-for="(ship) in shipsArray" :key="ship.ID"
+                v-for="(ship) in store.activePlayer.ships" :key="ship.ID"
                 @click="shipSelect(ship.ID)"
                 :label=ship.name
                 :disabled="ship.isSet"
@@ -13,7 +13,7 @@
             <p>
                 Current placement direction is
                 <custom-q-btn
-                    @click="rotate"
+                    @click="store.rotate"
                     :label=directionDisplay
                     class="buttonRow"
                 />
@@ -21,7 +21,7 @@
             </p>
             <p>Alternatively, you can click to
                 <custom-q-btn
-                    @click="preAuto"
+                    @click="store.autoPlace"
                     label="Place all"
                 />
             </p>
@@ -34,7 +34,7 @@
             />
             <custom-q-btn
                 :disabled=!isFullPlacement
-                @click="confirmPlacement"
+                @click="store.confirmPlacement"
                 label="Confirm Placement"
                 style="margin-right: 1%"
             />
@@ -44,42 +44,25 @@
 </template>
 
 <script setup>
-import { computed, toRef, toRefs } from 'vue';
+import { computed } from 'vue';
 import CustomQBtn from 'src/components/CustomQBtn.vue';
 import PlacementBoard from 'components/PlacementBoard.vue';
 
 import { useBattleshipStore } from 'stores/battleship.js';
 const store = useBattleshipStore();
 
-const p1Active = toRef(store, 'p1Active');
-const player = p1Active.value ? toRefs(store.p1) : toRefs(store.p2);
-const shipsArray = player.ships;
-
 function selectedBtnBkg (id) {
-    if (id === store.manualSelectID) {
-        return 'accent';
-    } else {
-        return 'primary';
-    }
+    return id === store.manualSelectID ? 'accent' : 'primary';
 };
 
 const directionDisplay = computed(() => store.manualGoRight ? 'Right' : 'Down');
-function rotate () {
-    store.manualGoRight = !store.manualGoRight;
-};
+
 function shipSelect (ID) {
     store.manualSelectID = ID;
 };
 
-const isFullPlacement = computed(() => shipsArray.value.every((ship) => ship.isSet));
-function preAuto () {
-    store.clearPlacement();
-    store.autoPlace();
-};
-function confirmPlacement () {
-    player.placementConfirmed.value = true;
-    p1Active.value = !p1Active.value;
-};
+const isFullPlacement = computed(() => store.activePlayer.ships.every((ship) => ship.isSet));
+
 </script>
 
 <style scoped>
