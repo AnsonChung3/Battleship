@@ -25,6 +25,7 @@ onMounted(() => {
     window.addEventListener('keyup', function (event) {
         if (hoverR.value === undefined && hoverC.value === undefined) { return }
         if (event.keyCode === 82) {
+            // key code 82 is key "R"
             store.rotate();
             store.removeHover()
             customMouseEnter(hoverR.value, hoverC.value)
