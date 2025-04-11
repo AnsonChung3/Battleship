@@ -4,7 +4,6 @@
             <p>Pick the size of ship you want to place</p>
             <custom-q-btn
                 v-for="(ship) in store.activePlayer.ships" :key="ship.ID"
-                @click="shipSelect(ship.ID)"
                 :label=ship.name
                 :disabled="ship.isSet"
                 class="buttonRow"
@@ -56,10 +55,6 @@ function selectedBtnBkg (id) {
 };
 
 const directionDisplay = computed(() => store.manualGoRight ? 'Right' : 'Down');
-
-function shipSelect (ID) {
-    store.manualSelectID = ID;
-};
 
 const isFullPlacement = computed(() => store.activePlayer.ships.every((ship) => ship.isSet));
 
