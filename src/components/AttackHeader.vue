@@ -5,7 +5,7 @@
                 <p>{{ headerText }}</p>
                 <div v-for="(ship) in shipsArray" :key=ship.ID class="inline">
                     <progress-q-btn
-                        :label=ship.ID
+                        :label=ship.name
                         :shipState=ship.isSunk
                         :shipLength=ship.len
                     />
