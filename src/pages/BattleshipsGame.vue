@@ -21,12 +21,19 @@
         <div>
             <h1>Battleships</h1>
         </div>
-        <div v-show="store.turnInterval">
+        <div
+            v-show="store.turnInterval"
+            ref='customInterval'
+        >
             <h1>{{ turnPlayer }} ready?</h1>
+            <p>
+                Click button to go
             <custom-q-btn
                 label="next turn"
                 @click="store.turnInterval = !store.turnInterval"
             />
+            . Or press 'Enter'.
+            </p>
         </div>
         <div v-show="!store.turnInterval">
             <div v-if="!store.p1.placementConfirmed" class="row">
@@ -55,7 +62,7 @@
 </template>
 
 <script setup>
-import { computed } from 'vue';
+import { computed, ref, onMounted } from 'vue';
 import PlacementHeader from 'components/PlacementHeader.vue';
 import AttackHeader from 'components/AttackHeader.vue';
 import AttackPanel from 'components/AttackPanel.vue';
@@ -67,6 +74,17 @@ store.initGame();
 
 const isPlayerOne = true;
 const turnPlayer = computed(() => store.p1Active ? 'Player 1' : 'Player 2');
+
+const customInterval = ref();
+onMounted(() => {
+    window.addEventListener('keyup', function (event) {
+        if (!store.turnInterval) { return }
+        if (event.keyCode === 13) {
+            // key code 13 is key "enter"
+            store.turnInterval = !store.turnInterval
+        }
+    })
+})
 </script>
 
 <style>
