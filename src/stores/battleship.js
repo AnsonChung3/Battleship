@@ -82,6 +82,7 @@ export const useBattleshipStore = defineStore('battleship', () => {
     }
 
     function hoverOverCell (R, C) {
+        if (activePlayer.value.ships.every(ship => ship.isSet)) { return };
         const ID = manualSelectID.value;
         const goRight = manualGoRight.value;
         const len = activePlayer.value.ships[ID - 1].len;
@@ -236,7 +237,6 @@ export const useBattleshipStore = defineStore('battleship', () => {
     const turnInterval = ref(false);
     const isAttackAbled = ref(true);
     function nextTurn () {
-        console.log('store next turn')
         turnInterval.value = !turnInterval.value;
         p1Active.value = !p1Active.value;
         isAttackAbled.value = !isAttackAbled.value;
