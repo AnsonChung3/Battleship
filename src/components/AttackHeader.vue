@@ -36,22 +36,22 @@
 </template>
 
 <script setup>
-import { toRefs, toRef, computed } from 'vue';
+import { toRefs, computed } from 'vue';
 import ProgressQBtn from 'src/components/ProgressQBtn.vue';
 import CustomQBtn from 'src/components/CustomQBtn.vue';
 
 const props = defineProps({
     p1: Boolean
 });
-const propP1 = toRef(props, 'p1');
 
 import { useBattleshipStore } from 'stores/battleship.js';
 const store = useBattleshipStore();
-const player = (propP1.value === true) ? toRefs(store.p1) : toRefs(store.p2);
+// toRefs() is used here to "create a ref for a property on a source reactive object"
+// so "mutating the source property will update the ref" for all the computed properties below
+const player = toRefs(props.p1 ? store.p1 : store.p2);
 const shipsArray = player.ships;
 
-const p1Active = toRef(store, 'p1Active');
-const homePanel = computed(() => propP1.value === p1Active.value);
+const homePanel = computed(() => player.player.value === store.activePlayer.player);
 const headerText = computed(() => homePanel.value ? 'Your Remaining Fleet' : 'Enemy Destroying Progress');
 const turnBtnText = computed(() => player.autoTurn.value ? 'Automatically' : 'Manually');
 const manualTurn = computed(() => { return !player.autoTurn.value; });

@@ -48,11 +48,11 @@
                 <h2>{{ turnPlayer }}'s turn</h2>
                 <div class="row">
                     <div class="panels col">
-                        <attack-header :p1=isPlayerOne />
+                        <attack-header :p1=true />
                         <attack-panel :p1=isPlayerOne />
                     </div>
                     <div class="panels col">
-                        <attack-header :p1=!isPlayerOne />
+                        <attack-header :p1=false />
                         <attack-panel :p1=!isPlayerOne />
                     </div>
                 </div>
