@@ -6,7 +6,7 @@
                 <div v-for="(ship) in shipsArray" :key=ship.ID class="inline">
                     <progress-q-btn
                         :label=ship.name
-                        :shipState=ship.isSunk
+                        :shipState=shipState(ship.isSunk)
                         :shipLength=ship.len
                     />
                 </div>
@@ -55,4 +55,7 @@ const homePanel = computed(() => player.player.value === store.activePlayer.play
 const headerText = computed(() => homePanel.value ? 'Your Remaining Fleet' : 'Enemy Destroying Progress');
 const turnBtnText = computed(() => player.autoTurn.value ? 'Automatically' : 'Manually');
 const manualTurn = computed(() => { return !player.autoTurn.value; });
+function shipState (state) {
+    return !homePanel.value ? false : state
+}
 </script>
