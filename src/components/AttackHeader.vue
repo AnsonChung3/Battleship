@@ -14,17 +14,21 @@
                     v-if="homePanel"
                     style="margin: 3% 0% 0% 0%"
                 >
-                    <p>Click to toggle end turn method: </p>
-                    <custom-q-btn
-                        :label=turnBtnText
-                        @click="turnToggle"
-                        style="margin: 0% 1% 0% 0%"
-                    />
-                    <custom-q-btn
-                        v-if="manualTurn"
-                        label="end turn"
-                        @click="store.nextTurn"
-                    />
+                    <p>Turn will end
+                        <custom-q-btn
+                            :label=turnBtnText
+                            @click="turnToggle"
+                            style="margin: 0% 1% 0% 0%"
+                        />
+                        . Click button to change.
+                    </p>
+                    <p>Click to
+                        <custom-q-btn
+                            v-if="manualTurn"
+                            label="end turn"
+                            @click="store.nextTurn"
+                        />
+                    </p>
                 </div>
             </q-card-section>
         </q-card>
@@ -49,7 +53,7 @@ const shipsArray = player.ships;
 const p1Active = toRef(store, 'p1Active');
 const homePanel = computed(() => propP1.value === p1Active.value);
 const headerText = computed(() => homePanel.value ? 'Your Remaining Fleet' : 'Enemy Destroying Progress');
-const turnBtnText = computed(() => player.autoTurn.value ? 'Auto' : 'Manual');
+const turnBtnText = computed(() => player.autoTurn.value ? 'Automatically' : 'Manually');
 const manualTurn = computed(() => { return !player.autoTurn.value; });
 
 function turnToggle () {
