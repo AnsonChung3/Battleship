@@ -22,9 +22,9 @@
                         />
                         . Click button to change.
                     </p>
-                    <p>Click to
+                    <p v-if="manualTurn">
+                        Click to
                         <custom-q-btn
-                            v-if="manualTurn"
                             label="end turn"
                             @click="store.nextTurn"
                         />
