@@ -236,6 +236,11 @@ export const useBattleshipStore = defineStore('battleship', () => {
     // game play
     const turnInterval = ref(false);
     const isAttackAbled = ref(true);
+
+    function endTurnToggle () {
+        activePlayer.value.autoTurn = !activePlayer.value.autoTurn;
+    }
+
     function nextTurn () {
         turnInterval.value = !turnInterval.value;
         p1Active.value = !p1Active.value;
@@ -263,6 +268,7 @@ export const useBattleshipStore = defineStore('battleship', () => {
         removeHover,
         activePlayer,
         confirmPlacement,
-        rotate
+        rotate,
+        endTurnToggle
     };
 });

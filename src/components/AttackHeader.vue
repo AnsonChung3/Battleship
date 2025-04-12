@@ -17,7 +17,7 @@
                     <p>Turn will end
                         <custom-q-btn
                             :label=turnBtnText
-                            @click="turnToggle"
+                            @click="store.endTurnToggle"
                             style="margin: 0% 1% 0% 0%"
                         />
                         . Click button to change.
@@ -55,8 +55,4 @@ const homePanel = computed(() => propP1.value === p1Active.value);
 const headerText = computed(() => homePanel.value ? 'Your Remaining Fleet' : 'Enemy Destroying Progress');
 const turnBtnText = computed(() => player.autoTurn.value ? 'Automatically' : 'Manually');
 const manualTurn = computed(() => { return !player.autoTurn.value; });
-
-function turnToggle () {
-    player.autoTurn.value = !player.autoTurn.value;
-}
 </script>
