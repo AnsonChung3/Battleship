@@ -96,8 +96,8 @@ onMounted(() => {
 }
 .cell {
     background: #CA7070;
-    width: 40px;
-    height: 40px;
+    width: 4vw;
+    height: 4vw;
     border: 1px solid #D4D4D4;
     margin: -10% -10% -10% 0%
 }
