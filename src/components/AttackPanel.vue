@@ -78,7 +78,7 @@ function isAttackLand (R, C) {
     if (!homePanel.value && opponent.autoTurn.value) {
         setTimeout(() => {
             store.nextTurn();
-        }, 1500);
+        }, 750);
     }
 }
 
