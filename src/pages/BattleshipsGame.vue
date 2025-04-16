@@ -98,6 +98,8 @@ onMounted(() => {
     background: #CA7070;
     width: 4vw;
     height: 4vw;
+    max-width: 5vh;
+    max-height: 5vh;
     border: 1px solid #D4D4D4;
     margin: -10% -10% -10% 0%
 }
