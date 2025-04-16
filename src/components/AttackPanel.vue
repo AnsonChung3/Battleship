@@ -46,26 +46,15 @@ function cellColor (R, C) {
     const cell = gridArray.value[R][C];
     if (homePanel.value) {
         if (cell.placement === 'PLACED') {
-            if (cell.isHit) {
-                return COLORS.HIT;
-            } else {
-                return COLORS.PLACED;
-            }
+            return cell.isHit ? COLORS.HIT : COLORS.PLACED;
         } else {
-            if (cell.isHit) {
-                return COLORS.MISS;
-            } else {
-                return COLORS.BLANK;
-            }
+            return cell.isHit ? COLORS.MISS : COLORS.BLANK
         }
     } else {
         if (!cell.isHit) {
             return COLORS.BLANK;
-        } else if (cell.placement === 'PLACED') {
-            return COLORS.HIT;
-        } else {
-            return COLORS.MISS;
         }
+        return cell.placement === 'PLACED' ? COLORS.HIT : COLORS.MISS
     }
 }
 
