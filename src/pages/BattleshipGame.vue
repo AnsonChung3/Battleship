@@ -19,7 +19,7 @@
             </q-dialog>
         </div>
         <div>
-            <h1>Battleships</h1>
+            <h1>Battleship</h1>
         </div>
         <div
             v-show="store.turnInterval"
