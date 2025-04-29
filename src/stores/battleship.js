@@ -235,7 +235,30 @@ export const useBattleshipStore = defineStore('battleship', () => {
 
     // game play
     const turnInterval = ref(false);
-    const isAttackAbled = ref(true);
+
+    function hitCell (R, C) {
+        const opponent = p1Active.value ? p2 : p1;
+        const checkCell = opponent.grid[R][C]
+        checkCell.isHit = true;
+        if (checkCell.placement === 'PLACED') {
+            if (isDestroyed(opponent.grid, checkCell.ID)) {
+                opponent.ships[checkCell.ID - 1].isSunk = true;
+                if (opponent.ships.every(ship => ship.isSunk)) {
+                    gameEnd.value = true;
+                }
+            }
+        }
+        if (activePlayer.value.autoTurn) {
+            setTimeout(() => {
+                nextTurn();
+            }, 750);
+        }
+    }
+
+    function isDestroyed (grid, ID) {
+        const cells = grid.flat().filter(cell => cell.ID === ID);
+        return (cells.every(cell => cell.isHit));
+    }
 
     function endTurnToggle () {
         activePlayer.value.autoTurn = !activePlayer.value.autoTurn;
@@ -244,7 +267,6 @@ export const useBattleshipStore = defineStore('battleship', () => {
     function nextTurn () {
         turnInterval.value = !turnInterval.value;
         p1Active.value = !p1Active.value;
-        isAttackAbled.value = !isAttackAbled.value;
     };
 
     return {
@@ -260,7 +282,6 @@ export const useBattleshipStore = defineStore('battleship', () => {
         manualGoRight,
         gameEnd,
         turnInterval,
-        isAttackAbled,
         nextTurn,
         manualPlace,
         clearPlacement,
@@ -269,6 +290,7 @@ export const useBattleshipStore = defineStore('battleship', () => {
         activePlayer,
         confirmPlacement,
         rotate,
-        endTurnToggle
+        endTurnToggle,
+        hitCell
     };
 });

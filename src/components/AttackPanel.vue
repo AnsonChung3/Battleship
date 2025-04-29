@@ -25,25 +25,25 @@
 </template>
 
 <script setup>
-import { toRef, toRefs, computed } from 'vue';
+import { computed } from 'vue';
 
 import { useBattleshipStore } from 'stores/battleship.js';
 const store = useBattleshipStore();
 const COLORS = store.COLORS;
 
-const p1Active = toRef(store, 'p1Active');
 const props = defineProps({
+    // this is a boolean prop hard passed into the component
+    // because this game is designed to have 2 players
+    // if want to modify in the future to accomodate more players, can change this part
     p1: Boolean
 });
-const p1 = toRef(props, 'p1');
-const homePanel = computed(() => { return (p1.value === p1Active.value); });
+const homePanel = computed(() => { return props.p1 === store.p1Active });
 
-const player = p1.value ? toRefs(store.p1) : toRefs(store.p2);
+const player = props.p1 ? store.p1 : store.p2;
 const gridArray = player.grid;
-const shipsArray = player.ships;
 
 function cellColor (R, C) {
-    const cell = gridArray.value[R][C];
+    const cell = gridArray[R][C];
     if (homePanel.value) {
         if (cell.placement === 'PLACED') {
             return cell.isHit ? COLORS.HIT : COLORS.PLACED;
@@ -51,6 +51,7 @@ function cellColor (R, C) {
             return cell.isHit ? COLORS.MISS : COLORS.BLANK
         }
     } else {
+        // else block is for showing opponent's board
         if (!cell.isHit) {
             return COLORS.BLANK;
         }
@@ -58,32 +59,11 @@ function cellColor (R, C) {
     }
 }
 
-const isAttackAbled = toRef(store, 'isAttackAbled');
 function isAttackLand (R, C) {
-    const checkCell = gridArray.value[R][C];
-    if (!isAttackAbled.value || checkCell.isHit) {
+    const checkCell = gridArray[R][C];
+    if (checkCell.isHit) {
         return;
     }
-    isAttackAbled.value = !isAttackAbled.value;
-    checkCell.isHit = true;
-    if (checkCell.placement === 'PLACED' && isDestroyed(checkCell.ID)) {
-        shipsArray.value[checkCell.ID - 1].isSunk = true;
-        const isEnd = shipsArray.value.every(ship => ship.isSunk);
-        if (isEnd) {
-            store.gameEnd = !store.gameEnd;
-            return;
-        }
-    }
-    const opponent = !p1.value ? toRefs(store.p1) : toRefs(store.p2);
-    if (!homePanel.value && opponent.autoTurn.value) {
-        setTimeout(() => {
-            store.nextTurn();
-        }, 750);
-    }
-}
-
-function isDestroyed (ID) {
-    const cells = gridArray.value.flat().filter(cell => cell.ID === ID);
-    return (cells.every(cell => cell.isHit));
+    store.hitCell(R, C)
 }
 </script>
