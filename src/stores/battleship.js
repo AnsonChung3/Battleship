@@ -52,7 +52,8 @@ export const useBattleshipStore = defineStore('battleship', () => {
                 ID: index + 1,
                 name: shipNames[len.toString()],
                 isSet: false,
-                isSunk: false
+                isSunk: false,
+                isDamaged: false
             };
         });
     }
@@ -241,6 +242,7 @@ export const useBattleshipStore = defineStore('battleship', () => {
         const checkCell = opponent.grid[R][C]
         checkCell.isHit = true;
         if (checkCell.placement === 'PLACED') {
+            opponent.ships[checkCell.ID - 1].isDamaged = true;
             if (isDestroyed(opponent.grid, checkCell.ID)) {
                 opponent.ships[checkCell.ID - 1].isSunk = true;
                 if (opponent.ships.every(ship => ship.isSunk)) {

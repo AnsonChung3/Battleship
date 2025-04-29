@@ -6,7 +6,8 @@
                 <div v-for="(ship) in shipsArray" :key=ship.ID class="inline">
                     <progress-q-btn
                         :label=ship.name
-                        :shipState=shipState(ship.isSunk)
+                        :sunkState=ship.isSunk
+                        :damageState=ship.isDamaged
                         :shipLength=ship.len
                     />
                 </div>
@@ -36,7 +37,7 @@
 </template>
 
 <script setup>
-import { toRefs, computed } from 'vue';
+import { computed } from 'vue';
 import ProgressQBtn from 'src/components/ProgressQBtn.vue';
 import CustomQBtn from 'src/components/CustomQBtn.vue';
 
@@ -46,16 +47,11 @@ const props = defineProps({
 
 import { useBattleshipStore } from 'stores/battleship.js';
 const store = useBattleshipStore();
-// toRefs() is used here to "create a ref for a property on a source reactive object"
-// so "mutating the source property will update the ref" for all the computed properties below
-const player = toRefs(props.p1 ? store.p1 : store.p2);
+const player = props.p1 ? store.p1 : store.p2;
 const shipsArray = player.ships;
 
-const homePanel = computed(() => player.player.value === store.activePlayer.player);
+const homePanel = computed(() => { return props.p1 === store.p1Active });
 const headerText = computed(() => homePanel.value ? 'Your Remaining Fleet' : 'Enemy Destroying Progress');
-const turnBtnText = computed(() => player.autoTurn.value ? 'Automatically' : 'Manually');
-const manualTurn = computed(() => { return !player.autoTurn.value; });
-function shipState (state) {
-    return !homePanel.value ? false : state
-}
+const turnBtnText = computed(() => player.autoTurn ? 'Automatically' : 'Manually');
+const manualTurn = computed(() => { return !player.autoTurn; });
 </script>

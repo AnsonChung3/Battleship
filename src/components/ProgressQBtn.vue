@@ -12,12 +12,21 @@
 </template>
 
 <script setup>
-import { toRef, computed } from 'vue';
+import { computed, toRef } from 'vue';
 const props = defineProps({
-    shipState: Boolean,
+    sunkState: Boolean,
+    damageState: Boolean,
     shipLength: Number
 });
-const stateRef = toRef(props, 'shipState');
-const colorCompu = computed(() => stateRef.value ? 'secondary' : 'primary');
-const textCompu = computed(() => stateRef.value ? 'warning' : 'secondary');
+
+const sunkState = toRef(props, 'sunkState')
+const damageState = toRef(props, 'damageState')
+
+const colorCompu = computed(() => {
+    if (damageState.value) {
+        return sunkState.value ? 'secondary' : 'accent';
+    }
+    return 'primary';
+});
+const textCompu = computed(() => sunkState.value ? 'warning' : 'secondary');
 </script>
