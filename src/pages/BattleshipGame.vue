@@ -18,7 +18,7 @@
                 </q-card>
             </q-dialog>
         </div>
-        <div>
+        <div v-if="!store.p1.placementConfirmed || !store.p2.placementConfirmed">
             <h1>Battleship</h1>
         </div>
         <div
