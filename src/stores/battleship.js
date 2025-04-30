@@ -247,6 +247,7 @@ export const useBattleshipStore = defineStore('battleship', () => {
                 opponent.ships[checkCell.ID - 1].isSunk = true;
                 if (opponent.ships.every(ship => ship.isSunk)) {
                     gameEnd.value = true;
+                    return
                 }
             }
         }
