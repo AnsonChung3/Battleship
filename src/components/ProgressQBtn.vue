@@ -1,5 +1,6 @@
 <template>
     <q-btn
+        class="custom-btn"
         :text-color=textCompu
         :color=colorCompu
     >

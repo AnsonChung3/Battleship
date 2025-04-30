@@ -3,14 +3,14 @@
         <q-card class="bg-info text-secondary">
             <q-card-section>
                 <p>{{ headerText }}</p>
-                <div v-for="(ship) in shipsArray" :key=ship.ID class="inline">
-                    <progress-q-btn
-                        :label=ship.name
-                        :sunkState=ship.isSunk
-                        :damageState=ship.isDamaged
-                        :shipLength=ship.len
-                    />
-                </div>
+                <progress-q-btn
+                    v-for="(ship) in shipsArray" :key=ship.ID
+                    class="inline"
+                    :label=ship.name
+                    :sunkState=ship.isSunk
+                    :damageState=ship.isDamaged
+                    :shipLength=ship.len
+                />
                 <div
                     v-if="homePanel"
                     style="margin: 3% 0% 0% 0%"

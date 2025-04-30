@@ -88,6 +88,7 @@ onMounted(() => {
 </script>
 
 <style>
+/* First 4 groups of settings are shared settings for child components */
 .inline {
   display: inline-block;
 }
@@ -102,6 +103,9 @@ onMounted(() => {
     max-height: 5vh;
     border: 1px solid #D4D4D4;
     margin: -10% -10% -10% 0%
+}
+.custom-btn {
+    margin: 1% 1% 1% 0%
 }
 .panels {
     padding: 0% 1% 0% 1%
