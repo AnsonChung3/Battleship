@@ -18,42 +18,42 @@
                 </q-card>
             </q-dialog>
         </div>
-        <div v-if="!store.p1.placementConfirmed || !store.p2.placementConfirmed">
-            <h1>Battleship</h1>
-        </div>
-        <div
-            v-show="store.turnInterval"
-            ref='customInterval'
-        >
-            <h1>{{ turnPlayer }} ready?</h1>
-            <p>
-                Click button to go
-            <custom-q-btn
-                label="next turn"
-                @click="store.turnInterval = !store.turnInterval"
-            />
-            . Or press 'Enter'.
-            </p>
-        </div>
-        <div v-show="!store.turnInterval">
-            <div v-if="!store.p1.placementConfirmed" class="row">
-                <placement-header class="panels col" />
-                <div class="panels col"> <h2>Player 1 please choose fleet placement</h2> </div>
+        <div class="game-panel">
+            <div v-if="!store.p1.placementConfirmed || !store.p2.placementConfirmed">
+                <h1>Battleship</h1>
             </div>
-            <div v-else-if="!store.p2.placementConfirmed" class="row">
-                <div class="panels col"> <h2>Player 2 please choose fleet placement</h2> </div>
-                <placement-header class="panels col" />
+            <div
+                v-show="store.turnInterval"
+                ref='customInterval'
+            >
+                <h1>{{ turnPlayer }} ready?</h1>
+                <p>
+                    Click button to go
+                <custom-q-btn
+                    label="next turn"
+                    @click="store.turnInterval = !store.turnInterval"
+                />
+                . Or press 'Enter'.
+                </p>
             </div>
-            <div v-else>
-                <h2>{{ turnPlayer }}'s turn</h2>
-                <div class="row">
-                    <div class="panels col">
-                        <attack-header :p1=true />
-                        <attack-panel :p1=true />
+            <div v-show="!store.turnInterval">
+                <div v-if="!store.p1.placementConfirmed" class="row">
+                    <placement-header class="panels col" />
+                    <div class="panels col"> <h2>Player 1 please choose fleet placement</h2> </div>
+                </div>
+                <div v-else-if="!store.p2.placementConfirmed" class="row">
+                    <div class="panels col"> <h2>Player 2 please choose fleet placement</h2> </div>
+                    <placement-header class="panels col" />
+                </div>
+                <div v-else>
+                    <h2>{{ turnPlayer }}'s turn</h2>
+                    <div class="row">
+                        <attack-header class="atk-header col" :p1=true />
+                        <attack-header class="atk-header col" :p1=false />
                     </div>
-                    <div class="panels col">
-                        <attack-header :p1=false />
-                        <attack-panel :p1=false />
+                    <div class="row">
+                        <attack-panel class="col" :p1=true />
+                        <attack-panel class="col" false />
                     </div>
                 </div>
             </div>
@@ -106,7 +106,13 @@ onMounted(() => {
 .custom-btn {
     margin: 1% 1% 1% 0%
 }
+.game-panel {
+    margin: 1% 1% 5% 1%
+}
 .panels {
     padding: 0% 1% 0% 1%
+}
+.atk-header {
+    margin: 0% 2% 2% 0%
 }
 </style>
