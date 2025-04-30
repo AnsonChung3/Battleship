@@ -49,11 +49,11 @@
                 <div class="row">
                     <div class="panels col">
                         <attack-header :p1=true />
-                        <attack-panel :p1=isPlayerOne />
+                        <attack-panel :p1=true />
                     </div>
                     <div class="panels col">
                         <attack-header :p1=false />
-                        <attack-panel :p1=!isPlayerOne />
+                        <attack-panel :p1=false />
                     </div>
                 </div>
             </div>
@@ -72,7 +72,6 @@ import { useBattleshipStore } from 'stores/battleship.js';
 const store = useBattleshipStore();
 store.initGame();
 
-const isPlayerOne = true;
 const turnPlayer = computed(() => store.p1Active ? 'Player 1' : 'Player 2');
 
 const customInterval = ref();
